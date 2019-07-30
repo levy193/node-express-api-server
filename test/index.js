@@ -1,6 +1,6 @@
-const DIContainer = require('../src/utils/DIContainer')
+const DiContainer = require('../src/utils/di-container')
 
-const diContainer = new DIContainer()
+const diContainer = new DiContainer()
 
 diContainer.factory('test', require('../src/utils/index').test)
 
