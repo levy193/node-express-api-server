@@ -3,6 +3,7 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const i18n = require('i18n')
 const Logger = require('@utils/logger')
+const config = require('@config')
 
 i18n.configure({
   locales: ['vi'],
@@ -57,6 +58,12 @@ module.exports = app => {
 
     next()
   })
+
+  /**
+   * Routers module
+   * Require here to wait dependencies injector container loaded
+   */
+  app.use(`/${config.appApiPrefix}`, require('@api'))
 
   // Handle error middleware
   app.use((req, res, next) => {

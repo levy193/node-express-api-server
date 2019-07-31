@@ -37,4 +37,6 @@ class DIContainer {
   }
 }
 
-module.exports = DIContainer
+const diContainer = new DIContainer()
+
+module.exports = diContainer

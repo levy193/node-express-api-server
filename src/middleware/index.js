@@ -1,7 +1,5 @@
-const diContainer = require('@utils/di-container')
-
-const passport = diContainer.get('passport')
-const concat = diContainer.get('lodash').concat
+const passport = require('passport')
+const { concat } = require('lodash')
 
 // Base middleware
 const baseMdw = []

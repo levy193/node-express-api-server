@@ -3,22 +3,22 @@ const glob = require('glob')
 const express = require('express')
 
 const middleware = require('@middleware')
+const router = express.Router()
+const componentsPath = glob.sync(path.resolve('./src/api/!(*.*)'))
 
-module.exports = router => {
-  const componentsPath = glob.sync(path.resolve('./src/api/!(*.*)'))
+const componentsName = componentsPath.map(v => {
+  return path.parse(v).name
+})
 
-  const componentsName = componentsPath.map(v => {
-    return path.parse(v).name
+componentsName.forEach(component => {
+  const componentRouter = express.Router()
+  const routes = glob.sync(path.join(__dirname, `./${component}/*.js`))
+
+  routes.forEach(route => {
+    require(route)(componentRouter)
   })
 
-  componentsName.forEach(component => {
-    const componentRouter = express.Router()
-    const routes = glob.sync(path.join(__dirname, `./${component}/*.js`))
+  router.use(`/${component}`, middleware(component), componentRouter)
+})
 
-    routes.forEach(route => {
-      require(route)(componentRouter)
-    })
-
-    router.use(`/${component}`, middleware(component), componentRouter)
-  })
-}
+module.exports = router

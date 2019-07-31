@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const generator = require('randomstring')
 const passportLocalMongoose = require('passport-local-mongoose')
 
 module.exports = dbConnection => {
@@ -35,6 +36,10 @@ module.exports = dbConnection => {
   }, {
     timestamp: true
   })
+
+  schema.statics.generateSid = () => {
+    return generator.generate(5)
+  }
 
   schema.plugin(passportLocalMongoose, {
     usernameField: 'username',

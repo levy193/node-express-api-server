@@ -1,17 +1,15 @@
 const path = require('path')
 const glob = require('glob')
 
-const DIContainer = require('@utils/di-container')
+const diContainer = require('@utils/di-container')
 const Logger = require('@utils/logger')
+const config = require('../config')
 
-const diContainer = new DIContainer()
-
-module.exports = diContainer
-
-module.exports.init = (dbConnection) => {
+module.exports = (dbConnection) => {
   // Dependencies
   diContainer.register('logger', Logger)
   diContainer.register('dbConnection', dbConnection)
+  diContainer.register('config', config)
 
   // Factory
 

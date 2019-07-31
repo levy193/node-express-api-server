@@ -3,8 +3,8 @@ require('../utils/alias')()
 
 const Logger = require('@utils/logger')
 const mongodbLoader = require('./mongodb')
-const vendorLoader = require('./vendor').init
-const expressLoader = require('./express')
+const vendorLoader = require('./vendor')
+const serverLoader = require('./server')
 
 module.exports = async app => {
   try {
@@ -13,11 +13,11 @@ module.exports = async app => {
     Logger.info('✌️  DB loaded and connected!  ✌️')
 
     // Load DIContainer
-    vendorLoader(dbConnection, Logger)
+    vendorLoader(dbConnection)
     Logger.info('✌️  Dependencies Injector loaded! ️️ ✌️')
 
     // Load express app
-    expressLoader(app)
+    serverLoader(app)
     Logger.info('✌️  Express application loaded!  ✌️')
   } catch (err) {
     Logger.error('⚠️  Loader error  ️⚠️')

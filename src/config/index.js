@@ -20,24 +20,27 @@ module.exports = {
   appPort: env.parsed.APP_PORT || 3000,
 
   /**
+   * Application api prefix
+   */
+  appApiPrefix: '',
+
+  /**
    * Mongo connect URI
    */
   dbURI: env.parsed.MONGODB_URI,
 
   /**
-   * JWT secret key
+   * Auth config
    */
-  jwtSecret: env.parsed.JWT_SECRET,
+  auth: {
+    jwtSecret: env.parsed.JWT_SECRET,
+    jwtExpire: '7d'
+  },
 
   /**
    * Winston logger
    */
   logs: {
     level: process.env.LOG_LEVEL || 'silly'
-  },
-
-  /**
-   * Api prefix
-   */
-  apiPrefix: ''
+  }
 }
