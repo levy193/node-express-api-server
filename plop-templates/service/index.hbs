@@ -1,0 +1,11 @@
+const diContainer = require('@utils/DiContainer')
+
+class {{properCase name}}Service {
+  constructor() {
+    this.User = diContainer.get('User')
+  }
+}
+
+const {{name}}Service = new {{properCase name}}Service()
+
+module.exports = {{name}}Service

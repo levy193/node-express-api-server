@@ -6,9 +6,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'development'
 
 const isProd = process.env.NODE_ENV === 'production'
 
-const env = dotenv.config({
-  path: isProd ? path.resolve('.env') : path.resolve('.env.dev')
-})
+const env = dotenv.config({ path: isProd ? path.resolve('.env') : path.resolve('.env.dev') })
 
 // Check .env file exist
 if (!env) throw new Error("⚠️  Couldn't find .env file ⚠️")
@@ -23,6 +21,11 @@ module.exports = {
    * Application api prefix
    */
   appApiPrefix: '',
+
+  /**
+   * Base URL
+   */
+  baseURL: 'https://domainname.com',
 
   /**
    * Mongo connect URI

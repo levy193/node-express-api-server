@@ -1,7 +1,7 @@
 const path = require('path')
 const glob = require('glob')
 
-const diContainer = require('@utils/di-container')
+const diContainer = require('@utils/DiContainer')
 const Logger = require('@utils/logger')
 const config = require('../config')
 
@@ -17,6 +17,6 @@ module.exports = (dbConnection) => {
   const modelsPaths = glob.sync(path.resolve('./src/models/*.js'))
   modelsPaths.forEach(modelPath => {
     const model = modelPath.split('/').pop().split('.').shift()
-    diContainer.factory(model, require(modelPath))
+    diContainer.register(model, require(modelPath)(dbConnection))
   })
 }

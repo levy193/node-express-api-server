@@ -1,13 +1,11 @@
 const asyncHandler = require('express-async-handler')
 
-const Service = require('@services/')
-
-const middleware = []
+const {{properCase service}}Service = require('@services/{{service}}')
 
 module.exports = router => {
   router.{{method}}(
     '/{{path}}',
-    middleware,
+    [],
     asyncHandler(async (req, res, next) => {
       res.status(200).json({})
     })

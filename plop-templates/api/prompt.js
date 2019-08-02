@@ -5,15 +5,15 @@ module.exports = {
   prompts: [
     {
       type: 'input',
-      name: 'moduleName',
-      message: 'api module name:',
-      validate: notEmpty('module')
-    },
-    {
-      type: 'input',
       name: 'name',
       message: 'api file name:',
       validate: notEmpty('name')
+    },
+    {
+      type: 'input',
+      name: 'service',
+      message: 'service:',
+      validate: notEmpty('service')
     },
     {
       type: 'checkbox',
@@ -49,7 +49,7 @@ module.exports = {
     const actions = [
       {
         type: 'add',
-        path: `src/api/${data.moduleName}/${data.name}.js`,
+        path: `src/api/${data.name}.js`,
         templateFile: 'plop-templates/api/index.hbs',
         data: {
           method: data.method,

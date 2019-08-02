@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken')
-const diContainer = require('@utils/di-container')
+const diContainer = require('@utils/DiContainer')
 
 class AuthService {
   constructor() {
@@ -15,13 +15,29 @@ class AuthService {
     })
   }
 
-  async login(username, password) {
-    const { user } = await this.User.authenticate()(username, password)
+  async login(payload) {
+    const { user } = await this.User.authenticate()(payload.username, payload.password)
 
     if (!user) throw new Error('ERR_USERNAME_OR_PASSWORD')
 
     user.sid = this.User.generateSid()
     await user.save()
+
+    return this.generateJwt({
+      uid: user._id,
+      sid: user.sid
+    })
+  }
+
+  async register(payload) {
+    let user = {}
+
+    // Create new user
+    user = new this.User(payload)
+    user.uuid = this.User.generateUuid(payload.username)
+    user.sid = this.User.generateSid()
+    await user.setPassword(payload.password)
+    user = await user.save()
 
     return this.generateJwt({
       uid: user._id,

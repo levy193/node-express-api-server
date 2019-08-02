@@ -1,13 +1,14 @@
 const mongoose = require('mongoose')
 const generator = require('randomstring')
+const uuid = require('uuid/v4')
 const passportLocalMongoose = require('passport-local-mongoose')
 
 module.exports = dbConnection => {
   const schema = new mongoose.Schema({
-    id: {
+    uuid: {
       type: String,
       unique: true,
-      required: [true, 'ERR_USER_ID_REQUIRED']
+      required: [true, 'ERR_USER_UUID_REQUIRED']
     },
 
     username: {
@@ -36,6 +37,10 @@ module.exports = dbConnection => {
   }, {
     timestamp: true
   })
+
+  schema.statics.generateUuid = name => {
+    return uuid()
+  }
 
   schema.statics.generateSid = () => {
     return generator.generate(5)

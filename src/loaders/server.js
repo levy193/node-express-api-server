@@ -1,26 +1,27 @@
+const path = require('path')
 const helmet = require('helmet')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const i18n = require('i18n')
-const Logger = require('@utils/logger')
+const passport = require('passport')
 const config = require('@config')
 
 i18n.configure({
   locales: ['vi'],
   defaultLocale: 'vi',
-  directory: '../../lang',
+  directory: path.resolve('./src/lang'),
   updateFiles: false,
   syncFiles: false,
   register: global
 })
 
 module.exports = app => {
+  app.enable('trust proxy')
+
   // Health check endpoint
   app.head('/status', (req, res) => {
     res.status(200).end()
   })
-
-  app.enable('trust proxy')
 
   // Global middleware
   app
@@ -37,6 +38,7 @@ module.exports = app => {
       limit: '100kb'
     }))
     .use(i18n.init)
+    .use(passport.initialize())
 
   // Language middleware
   app.use((req, res, next) => {
@@ -78,13 +80,13 @@ module.exports = app => {
     else error = rawError
 
     // For debug
-    if (process.env.NODE_ENV === 'development') Logger.error(error)
+    if (process.env.NODE_ENV === 'development') console.error(error)
 
     res
       .status(500)
       .json({
         error: {
-          msg: req.__(error.message),
+          msg: res.__(error.message),
           code: error.message
         }
       })
