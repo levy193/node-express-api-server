@@ -8,8 +8,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon src/app.js",
     "new": "plop",
-    "lint": "eslint --ext .js src",
-    "precommit": "lint-staged"
+    "lint": "eslint --ext .js src"
   },
   "dependencies": {
     "bluebird": "^3.5.5",
@@ -48,6 +47,14 @@
     "plop": "^2.4.0"
   },
   "lint-staged": {
-    "src/**/*.js": "eslint --fix"
+    "src/**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   }
 }
