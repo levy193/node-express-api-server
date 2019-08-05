@@ -9,6 +9,7 @@ class AuthService {
     this.User = diContainer.get('User')
   }
 
+  // Generate JWT with secret key and set expire time
   generateJwt(payload) {
     return jwt.sign(payload, this.jwtSecret, {
       expiresIn: this.jwtExpire

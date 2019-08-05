@@ -8,6 +8,7 @@ module.exports = () => {
     '@config': path.resolve('./src/config'),
     '@utils': path.resolve('./src/utils'),
     '@services': path.resolve('./src/services'),
+    '@validators': path.resolve('./src/validators'),
     '@middleware': path.resolve('./src/middleware')
   })
 }
