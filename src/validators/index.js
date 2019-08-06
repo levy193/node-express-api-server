@@ -15,11 +15,11 @@ validatorsPath.forEach(validatorPath => {
 const validate = (path, data) => {
   if (!validators[path]) throw new Error('ERR_VALIDATOR_NOT_FOUND')
 
-  const errors = validators[path].validate(data)
+  const { error } = validators[path].validate(data)
 
-  console.log(errors)
+  if (!error) return true
+
+  throw error
 }
 
-validate('user', {})
-
-// module.exports = validate
+module.exports = validate
