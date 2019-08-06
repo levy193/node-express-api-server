@@ -11,6 +11,7 @@
     "lint": "eslint --ext .js src"
   },
   "dependencies": {
+    "@hapi/joi": "^15.1.0",
     "bluebird": "^3.5.5",
     "cors": "^2.8.5",
     "dotenv": "^8.0.0",
@@ -30,8 +31,7 @@
     "passport-local-mongoose": "^5.0.1",
     "randomstring": "^1.1.5",
     "uuid": "^3.3.2",
-    "winston": "^3.2.1",
-    "yup": "^0.27.0"
+    "winston": "^3.2.1"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",
@@ -47,10 +47,7 @@
     "plop": "^2.4.0"
   },
   "lint-staged": {
-    "src/**/*.js": [
-      "eslint --fix",
-      "git add"
-    ]
+    "src/**/*.js": "eslint --fix"
   },
   "husky": {
     "hooks": {

@@ -2,7 +2,7 @@
 require('../utils/alias')()
 
 const Logger = require('@utils/logger')
-const mongodbLoader = require('./mongodb')
+const mongooseLoader = require('./mongoose')
 const vendorLoader = require('./vendor')
 const passportLoader = require('./passport')
 const serverLoader = require('./server')
@@ -10,7 +10,7 @@ const serverLoader = require('./server')
 module.exports = async app => {
   try {
     // Load mongodb
-    const dbConnection = await mongodbLoader()
+    const dbConnection = await mongooseLoader()
     Logger.info('DB loaded and connected!  ✌️')
 
     // Load DIContainer

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose')
-const bluebird = require('bluebird')
-const config = require('../config')
+const promise = require('bluebird')
+const path = require('path')
+const glob = require('glob')
+const config = require('@config')
 
 module.exports = async () => {
   const production = process.env.NODE_ENV === 'production'
@@ -12,7 +14,7 @@ module.exports = async () => {
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 500,
     connectTimeoutMS: 10000,
-    promiseLibrary: bluebird,
+    promiseLibrary: promise,
     keepAlive: true
   }
 
@@ -22,6 +24,13 @@ module.exports = async () => {
   mongoose.set('runValidators', true)
 
   const connection = await mongoose.createConnection(config.dbURI, options)
+
+  // Sync indexes
+  const modelsPaths = glob.sync(path.resolve('./src/models/*.js'))
+  await promise.all(modelsPaths.map(modelPath => {
+    const model = require(modelPath)(connection)
+    return model.syncIndexes()
+  }))
 
   return connection
 }

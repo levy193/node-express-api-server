@@ -12,4 +12,14 @@ validatorsPath.forEach(validatorPath => {
   validators[validator] = require(validatorPath)
 })
 
-module.exports = validators
+const validate = (path, data) => {
+  if (!validators[path]) throw new Error('ERR_VALIDATOR_NOT_FOUND')
+
+  const errors = validators[path].validate(data)
+
+  console.log(errors)
+}
+
+validate('user', {})
+
+// module.exports = validate

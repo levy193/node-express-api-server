@@ -6,7 +6,9 @@ class AuthService {
     const config = diContainer.get('config')
     this.jwtSecret = config.auth.jwtSecret
     this.jwtExpire = config.auth.jwtExpire
+
     this.User = diContainer.get('User')
+    this.validators = diContainer.get('validators')
   }
 
   // Generate JWT with secret key and set expire time
