@@ -12,7 +12,7 @@ const appBoot = async () => {
     await app.listen(config.appPort)
     Logger.info(`🛡️  Server listening on port: ${config.appPort}  🛡️`)
   } catch (err) {
-    Logger.error('err')
+    Logger.error(err)
     process.exit(0)
   }
 }
