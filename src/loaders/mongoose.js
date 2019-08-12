@@ -5,12 +5,13 @@ const glob = require('glob')
 const config = require('@config')
 
 module.exports = async () => {
-  const production = process.env.NODE_ENV === 'production'
+  const isProd = process.env.NODE_ENV === 'production'
+  const isDev = process.env.NODE_ENV === 'development'
 
   // Mongoose options
   const options = {
     useNewUrlParser: true,
-    autoIndex: !production,
+    autoIndex: !isProd,
     reconnectTries: Number.MAX_VALUE,
     reconnectInterval: 500,
     connectTimeoutMS: 10000,
@@ -18,7 +19,7 @@ module.exports = async () => {
     keepAlive: true
   }
 
-  mongoose.set('debug', !production)
+  mongoose.set('debug', isDev)
   mongoose.set('useCreateIndex', true)
   mongoose.set('useFindAndModify', false)
   mongoose.set('runValidators', true)

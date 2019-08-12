@@ -16,7 +16,7 @@ module.exports = {
       validate: notEmpty('service')
     },
     {
-      type: 'checkbox',
+      type: 'list',
       name: 'method',
       message: 'method:',
       choices: [

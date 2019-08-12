@@ -1,9 +1,20 @@
-const DiContainer = require('../src/utils/di-container')
+const Mocha = require('mocha')
+const Application = require('../src/app.js')
 
-const diContainer = new DiContainer()
+const mocha = new Mocha()
 
-diContainer.factory('test', require('../src/utils/index').test)
 
-const test = diContainer.get('test')
+const test = async () => {
+  const app = new Application()
 
-console.log(test)
+  // Start server
+  await app.boot()
+
+  // Testing case
+  mocha.addFile('./test/auth.js')
+
+  mocha.run()
+}
+
+// Start test
+test()

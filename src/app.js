@@ -3,18 +3,22 @@ const loader = require('./loaders')
 const config = require('./config')
 const Logger = require('./utils/logger')
 
-const appBoot = async () => {
-  try {
-    const app = express()
+class Application {
+  constructor() {
+    this.PORT = config.appPort
+    this.app = express()
+  }
 
-    await loader(app)
-
-    await app.listen(config.appPort)
-    Logger.info(`🛡️  Server listening on port: ${config.appPort}  🛡️`)
-  } catch (err) {
-    Logger.error(err)
-    process.exit(0)
+  async boot() {
+    try {
+      await loader(this.app)
+      await this.app.listen(this.PORT)
+      Logger.info(`🛡️  Server listening on port: ${config.appPort}  🛡️`)
+    } catch (error) {
+      Logger.error(error)
+      process.exit(0)
+    }
   }
 }
 
-appBoot(process.env.PORT || 3000)
+module.exports = Application
