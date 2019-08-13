@@ -2,9 +2,8 @@ const mongoose = require('mongoose')
 const promise = require('bluebird')
 const path = require('path')
 const glob = require('glob')
-const config = require('@config')
 
-module.exports = async () => {
+module.exports = async (dbURI) => {
   const isProd = process.env.NODE_ENV === 'production'
   const isDev = process.env.NODE_ENV === 'development'
 
@@ -24,10 +23,10 @@ module.exports = async () => {
   mongoose.set('useFindAndModify', false)
   mongoose.set('runValidators', true)
 
-  const connection = await mongoose.createConnection(config.dbURI, options)
+  const connection = await mongoose.createConnection(dbURI, options)
 
   // Sync indexes
-  const modelsPaths = glob.sync(path.resolve('./src/models/*.js'))
+  const modelsPaths = glob.sync(path.resolve(`./src/models/*.js`))
   await promise.all(modelsPaths.map(modelPath => {
     const model = require(modelPath)(connection)
     return model.syncIndexes()
