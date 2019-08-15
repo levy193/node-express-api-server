@@ -15,7 +15,7 @@ class Application {
       await this.app.listen(this.PORT)
       Logger.info(`🛡️  Server listening on port: ${config.appPort}  🛡️`)
     } catch (error) {
-      Logger.error(error)
+      console.log(error)
       process.exit(0)
     }
   }

@@ -13,7 +13,8 @@ const authMdw = [
 const defaultMdw = concat(baseMdw, authMdw)
 
 const constantMdw = {
-  auth: concat(baseMdw, [])
+  auth: concat(baseMdw, []),
+  books: concat(baseMdw, [])
 }
 
 module.exports = module => constantMdw[module] || defaultMdw

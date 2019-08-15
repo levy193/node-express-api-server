@@ -6,7 +6,7 @@ module.exports = router => {
   router.{{method}}(
     '/{{path}}',
     [],
-    asyncHandler(async (req, res, next) => {
+    asyncHandler(async (req, res) => {
       res.status(200).json({})
     })
   )

@@ -27,10 +27,17 @@ module.exports = async (dbURI) => {
 
   // Sync indexes
   const modelsPaths = glob.sync(path.resolve(`./src/models/*.js`))
-  await promise.all(modelsPaths.map(modelPath => {
-    const model = require(modelPath)(connection)
-    return model.syncIndexes()
-  }))
+
+  if (isProd) {
+    await promise.all(modelsPaths.map(modelPath => {
+      const model = require(modelPath).model(connection)
+      return model.syncIndexes()
+    }))
+  } else {
+    modelsPaths.forEach(modelPath => {
+      require(modelPath).model(connection)
+    })
+  }
 
   return connection
 }

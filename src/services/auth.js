@@ -18,8 +18,8 @@ class AuthService {
     })
   }
 
-  async login(payload) {
-    const { user } = await this.User.authenticate()(payload.username, payload.password)
+  async login({ username, password }) {
+    const { user } = await this.User.authenticate()(username, password)
 
     if (!user) throw new Error('ERR_USERNAME_OR_PASSWORD')
 
@@ -32,14 +32,17 @@ class AuthService {
     })
   }
 
-  async register(payload) {
+  async register({
+    username,
+    password
+  }) {
     let user = {}
 
     // Create new user
-    user = new this.User(payload)
-    user.uuid = this.User.generateUuid(payload.username)
+    user = new this.User(arguments[0])
+    user.uuid = this.User.generateUuid(username)
     user.sid = this.User.generateSid()
-    await user.setPassword(payload.password)
+    await user.setPassword(password)
     user = await user.save()
 
     return this.generateJwt({
