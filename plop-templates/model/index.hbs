@@ -1,12 +1,29 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
-module.exports = dbConnection => {
-  const Types = mongoose.Schema.Types
+const Types = mongoose.Schema.Types
 
-  const schema = new mongoose.Schema({
-  }, {
+const schema = {
+  createdBy: {
+    type: Types.ObjectId,
+    required: [true, 'ERR_CREATED_BY_REQUIRED'],
+    ref: 'User'
+  }
+}
+
+const model = dbConnection => {
+  const modelSchema = new mongoose.Schema(schema, {
     timestamps: true
   })
 
-  return dbConnection.model('{{name}}', schema)
+  modelSchema.plugin(uniqueValidator, {
+    message: 'ERR_{PATH}_MUST_BE_UNIQUE'
+  })
+
+  return dbConnection.model('{{name}}', modelSchema)
+}
+
+module.exports = {
+  model,
+  schema
 }

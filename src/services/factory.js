@@ -11,10 +11,11 @@ class FactoryService {
     })
   }
 
-  async getDocument({ model, query, populate }) {
+  async getDocument({ model, query, populate, select }) {
     const document = await this[model]
       .findOne(query)
       .populate(populate)
+      .select(select)
 
     return document
   }
@@ -26,6 +27,22 @@ class FactoryService {
       .select(select)
 
     return documents
+  }
+
+  async createDocument({ model, body, query, populate, select }) {
+    const document = await this[model]
+      .create(body)
+
+    return document
+  }
+
+  async updateDocument({ model, updateQuery, body, query, populate, select }) {
+    const document = await this[model]
+      .findOneAndUpdate(updateQuery, body, {
+        new: true
+      })
+
+    return document
   }
 }
 

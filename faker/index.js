@@ -1,6 +1,3 @@
-const path = require('path')
-const glob = require('glob')
-
 const config = require('./src/config')
 
 const mongooseLoader = require('./src/loaders/mongoose')

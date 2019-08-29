@@ -3,8 +3,7 @@ const AuthService = require('@services/auth')
 
 module.exports = router => {
   /**
-   * Login router
-   *
+   * Login
    */
   router.post(
     '/login',

@@ -82,6 +82,9 @@ module.exports = app => {
     // For debug
     if (process.env.NODE_ENV === 'development') console.error(error)
 
+    // Standard error message code
+    error.message = error.message.toUpperCase()
+
     res
       .status(500)
       .json({
